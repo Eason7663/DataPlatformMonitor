@@ -36,10 +36,19 @@ public class MonitorApp {
 		}
 		String[] arr = prop.getProperty("IP").split(",");
 		this.listIPList = Arrays.asList(arr);
-		this.logPrint = Boolean.parseBoolean(prop.getProperty("DEBUG_ON"));
+		//日志开关打印具体返回信息
+		MonitorApp.logPrint = Boolean.parseBoolean(prop.getProperty("DEBUG_ON"));
 		
 	}
 	
+	/**
+	 * @Description 从配置文件中读出将包含IP地址的String，再转成List<String>
+	 * @param strConf
+	 * @return
+	 * @return_type List<String>
+	 * @author Eason
+	 * @date 2017年8月25日 下午4:19:39  
+	 */
 	public List<String> creatList(String strConf) {
 		Properties prop = new Properties();
 		try {
@@ -52,13 +61,20 @@ public class MonitorApp {
 		return Arrays.asList(arr);
 	}
 	
+	/**
+	 * @Description oboslete
+	 * @param deErrlogPath
+	 * @return_type void
+	 * @author Eason
+	 * @date 2017年8月25日 下午5:04:48  
+	 */
 	public void initEnv(String deErrlogPath){
 		//删除error文件如果存在
         File file=new File(deErrlogPath);
         if(file.exists()&&file.isFile()){
         	try {
             	if (file.delete()) {
-    				logger.info("error.log删除成功！");
+    				logger.info("error.log 删除成功！");
     			}
 			} catch (SecurityException e) {
 				// TODO: handle exception
@@ -72,6 +88,7 @@ public class MonitorApp {
 	public static void main(String[] args) {
 		try {
 			MonitorApp mApp = new MonitorApp(".//conf//monitor.properties");
+			//清理环境
 //			mApp.initEnv(".//logs//error.log");
 
 			for (String stringIP : mApp.getListIPList()) {
